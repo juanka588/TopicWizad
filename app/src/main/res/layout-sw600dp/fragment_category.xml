@@ -11,6 +11,7 @@
 
     <ImageView
         android:id="@+id/icon"
+        android:layout_marginTop="100dp"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
@@ -18,8 +19,9 @@
         app:srcCompat="@drawable/art" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="100dp"
         android:id="@+id/recycle_view"
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:padding="10dp" />

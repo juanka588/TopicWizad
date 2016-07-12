@@ -1,18 +1,29 @@
 package com.unal.personal.gui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.unal.personal.R;
 import com.unal.personal.dataSource.TopicDataSource;
 import com.unal.personal.dataSource.Utils;
+import com.unal.personal.interfaces.OnCategoryListListener;
+import com.unal.personal.interfaces.OnTopicListListener;
+import com.unal.personal.structures.Category;
+import com.unal.personal.structures.Topic;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements OnCategoryListListener, OnTopicListListener {
+
+    private LinearLayout two_pane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,25 +36,26 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.createTopicActivity(MainActivity.this, TopicDataSource.getRandomTopic(getApplicationContext()));
+                ArrayList<Topic> randomTopic = TopicDataSource.getRandomTopic(getApplicationContext());
+                onTopicSelected(randomTopic.get(0));
             }
         });
         initFragments();
     }
 
     private void initFragments() {
-        View two_pane = findViewById(R.id.two_pane_layout);
+        two_pane = (LinearLayout) findViewById(R.id.two_pane_layout);
         MainActivityFragment currentFragment = new MainActivityFragment();
         Bundle extras = new Bundle();
-        if (two_pane == null) {
-            extras.putInt(MainActivityFragment.ARG_COLUMN, 2);
-        } else {
+        if (two_pane != null) {
             extras.putInt(MainActivityFragment.ARG_COLUMN, 1);
+        } else {
+            extras.putInt(MainActivityFragment.ARG_COLUMN, 2);
         }
         currentFragment.setArguments(extras);
-        // FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        // transaction.replace(R.id.container, currentFragment);
-        //transaction.commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, currentFragment);
+        transaction.commit();
 
     }
 
@@ -67,5 +79,42 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCategorySelected(Category category) {
+        if (two_pane != null) {
+            CategoryActivityFragment currentFragment = new CategoryActivityFragment();
+            Bundle extras = new Bundle();
+            extras.putParcelable(CategoryActivityFragment.CATEGORY_EXTRA, category);
+            currentFragment.setArguments(extras);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container_cat, currentFragment);
+            transaction.commit();
+
+        } else {
+            Intent intent = new Intent(this, CategoryActivity.class);
+            intent.putExtra(CategoryActivityFragment.CATEGORY_EXTRA, category);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onTopicSelected(Topic topic) {
+        ArrayList<Topic> topics = new ArrayList<>();
+        topics.add(topic);
+        if (two_pane != null) {
+            TopicActivityFragment currentFragment = new TopicActivityFragment();
+            Bundle extras = new Bundle();
+            extras.putParcelable(TopicActivityFragment.ARG_TOPIC, topic);
+            currentFragment.setArguments(extras);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container_cat, currentFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+
+        } else {
+            Utils.createTopicActivity(this, topics);
+        }
     }
 }

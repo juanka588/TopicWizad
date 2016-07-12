@@ -1,8 +1,9 @@
 package com.unal.personal.gui;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import com.unal.personal.R;
 import com.unal.personal.adapters.TopicsAdapter;
 import com.unal.personal.dataSource.TopicDataSource;
+import com.unal.personal.interfaces.OnTopicListListener;
 import com.unal.personal.structures.Category;
 import com.unal.personal.structures.Topic;
 
@@ -29,6 +31,7 @@ public class CategoryActivityFragment extends Fragment {
     public static final String CATEGORY_EXTRA = "category";
     private static final String TAG = CategoryActivityFragment.class.getSimpleName();
     private Category category;
+    private OnTopicListListener mCallBack;
 
     public CategoryActivityFragment() {
     }
@@ -57,8 +60,19 @@ public class CategoryActivityFragment extends Fragment {
             List<Topic> topics = TopicDataSource.getTopicList(category, root.getContext());
             RecyclerView topicList = (RecyclerView) root.findViewById(R.id.recycle_view);
             topicList.setLayoutManager(new LinearLayoutManager(root.getContext()));
-            topicList.setAdapter(new TopicsAdapter(topics, getActivity()));
+            topicList.setAdapter(new TopicsAdapter(topics, mCallBack));
         }
         return root;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallBack = (OnTopicListListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement OnTopicListListener");
+        }
     }
 }

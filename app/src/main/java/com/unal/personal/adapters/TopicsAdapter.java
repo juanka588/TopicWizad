@@ -1,6 +1,5 @@
 package com.unal.personal.adapters;
 
-import android.app.Activity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unal.personal.R;
-import com.unal.personal.dataSource.Utils;
+import com.unal.personal.interfaces.OnTopicListListener;
 import com.unal.personal.structures.Topic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +20,7 @@ import java.util.List;
 public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicViewHolder> {
 
     private List<Topic> topics;
-    private Activity mActivity;
+    private OnTopicListListener mCallBack;
 
 
     @Override
@@ -52,15 +50,13 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicViewH
         return topics.size();
     }
 
-    public TopicsAdapter(List<Topic> places, Activity activity) {
+    public TopicsAdapter(List<Topic> places, OnTopicListListener mCallBack) {
         this.topics = places;
-        this.mActivity = activity;
+        this.mCallBack = mCallBack;
     }
 
     public void showImage(int position) {
-        ArrayList<Topic> topic=new ArrayList<>();
-        topic.add(topics.get(position));
-        Utils.createTopicActivity(mActivity,topic);
+        mCallBack.onTopicSelected(topics.get(position));
     }
 
     public class TopicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

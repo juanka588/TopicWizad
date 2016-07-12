@@ -1,7 +1,5 @@
 package com.unal.personal.adapters;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unal.personal.R;
-import com.unal.personal.gui.CategoryActivity;
-import com.unal.personal.gui.CategoryActivityFragment;
+import com.unal.personal.interfaces.OnCategoryListListener;
 import com.unal.personal.structures.Category;
 
 import java.util.List;
@@ -25,7 +22,7 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private List<Category> categories;
-    private Activity mActivity;
+    private OnCategoryListListener mCallBack;
 
 
     @Override
@@ -57,15 +54,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return categories.size();
     }
 
-    public CategoryAdapter(List<Category> places, Activity activity) {
+    public CategoryAdapter(List<Category> places, OnCategoryListListener mCallBack) {
         this.categories = places;
-        this.mActivity = activity;
+        this.mCallBack = mCallBack;
     }
 
-    private void showImage(int position) {
-        Intent intent = new Intent(mActivity, CategoryActivity.class);
-        intent.putExtra(CategoryActivityFragment.CATEGORY_EXTRA, categories.get(position));
-        mActivity.startActivity(intent);
+    private void selectCategory(int position) {
+        mCallBack.onCategorySelected(categories.get(position));
     }
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -83,7 +78,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         @Override
         public void onClick(View v) {
-            showImage(getAdapterPosition());
+            selectCategory(getAdapterPosition());
         }
 
     }
