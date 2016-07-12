@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:contentDescription="@string/icon"
-            android:padding="16dp"
+            android:padding="10dp"
             android:scaleType="fitXY"
             app:srcCompat="@mipmap/ic_launcher" />
 
@@ -33,9 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="24dp"
             android:gravity="center_vertical|left"
-            android:padding="10dp"
+            android:padding="8dp"
             android:text="@string/accept"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@android:color/white" />
