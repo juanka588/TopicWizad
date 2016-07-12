@@ -1,6 +1,5 @@
 package com.unal.personal.gui;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,7 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.unal.personal.R;
 import com.unal.personal.adapters.TopicsAdapter;
@@ -19,7 +18,6 @@ import com.unal.personal.dataSource.TopicDataSource;
 import com.unal.personal.structures.Category;
 import com.unal.personal.structures.Topic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,6 +52,8 @@ public class CategoryActivityFragment extends Fragment {
             root.setBackgroundColor(Color.parseColor(category.getColor()));
             AppCompatActivity activity = (AppCompatActivity) getActivity();
             activity.getSupportActionBar().setTitle(category.getName());
+            ImageView icon = (ImageView) root.findViewById(R.id.icon);
+            icon.setImageResource(category.getImage());
             List<Topic> topics = TopicDataSource.getTopicList(category, root.getContext());
             RecyclerView topicList = (RecyclerView) root.findViewById(R.id.recycle_view);
             topicList.setLayoutManager(new LinearLayoutManager(root.getContext()));

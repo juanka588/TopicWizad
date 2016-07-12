@@ -2,6 +2,7 @@ package com.unal.personal.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,8 +31,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewcat, parent, false);
-        CategoryViewHolder pvh = new CategoryViewHolder(v);
-        return pvh;
+        return new CategoryViewHolder(v);
     }
 
     @Override
@@ -44,6 +44,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Category p = categories.get(i);
         holder.icon.setImageResource(p.getImage());
         holder.title.setText(p.getName());
+        holder.cv.setBackgroundColor(Color.parseColor(p.getColor()));
     }
 
     @Override
@@ -61,7 +62,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         this.mActivity = activity;
     }
 
-    public void showImage(int position) {
+    private void showImage(int position) {
         Intent intent = new Intent(mActivity, CategoryActivity.class);
         intent.putExtra(CategoryActivityFragment.CATEGORY_EXTRA, categories.get(position));
         mActivity.startActivity(intent);

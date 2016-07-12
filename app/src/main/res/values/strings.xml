@@ -6,4 +6,6 @@
     <string name="database">Data Base updated</string>
     <string name="title_activity_tab_topic">TabTopicActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="no_topic">No topics to show</string>
+    <string name="icon">Category Image</string>
 </resources>

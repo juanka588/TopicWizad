@@ -3,6 +3,7 @@ package com.unal.personal.gui;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,9 +27,6 @@ public class CategoryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        //currentFragment = (CategoryActivityFragment)
-        //       getFragmentManager().findFragmentById(R.id.fragment);
         currentFragment = new CategoryActivityFragment();
         final Bundle extras = getIntent().getExtras();
         currentFragment.setArguments(extras);
@@ -48,7 +46,12 @@ public class CategoryActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.createTopicActivity(CategoryActivity.this, TopicDataSource.getTopicList(category,getApplicationContext()));
+                ArrayList<Topic> topics = TopicDataSource.getTopicList(category, getApplicationContext());
+                if (topics.isEmpty()) {
+                    Snackbar.make(view, CategoryActivity.this.getString(R.string.no_topic), Snackbar.LENGTH_LONG).show();
+                } else {
+                    Utils.createTopicActivity(CategoryActivity.this, topics);
+                }
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

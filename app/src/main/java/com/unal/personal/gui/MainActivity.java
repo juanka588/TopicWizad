@@ -4,15 +4,13 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.unal.personal.R;
-import com.unal.personal.adapters.TopicsAdapter;
 import com.unal.personal.dataSource.TopicDataSource;
 import com.unal.personal.dataSource.Utils;
-import com.unal.personal.structures.Topic;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +28,23 @@ public class MainActivity extends AppCompatActivity {
                 Utils.createTopicActivity(MainActivity.this, TopicDataSource.getRandomTopic(getApplicationContext()));
             }
         });
+        initFragments();
+    }
+
+    private void initFragments() {
+        View two_pane = findViewById(R.id.two_pane_layout);
+        MainActivityFragment currentFragment = new MainActivityFragment();
+        Bundle extras = new Bundle();
+        if (two_pane == null) {
+            extras.putInt(MainActivityFragment.ARG_COLUMN, 2);
+        } else {
+            extras.putInt(MainActivityFragment.ARG_COLUMN, 1);
+        }
+        currentFragment.setArguments(extras);
+        // FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        // transaction.replace(R.id.container, currentFragment);
+        //transaction.commit();
+
     }
 
     @Override

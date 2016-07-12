@@ -9,7 +9,6 @@ import com.unal.personal.structures.Category;
 import com.unal.personal.structures.Topic;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by juanka on 08/07/2016.
@@ -33,6 +32,7 @@ public class TopicDataSource implements BaseColumns {
             }
         }
         cursor.close();
+        db.close();
         dataBase.close();
         return topics;
     }
@@ -49,11 +49,12 @@ public class TopicDataSource implements BaseColumns {
             }
         }
         cursor.close();
+        db.close();
         dataBase.close();
         return topics;
     }
 
-    public static String getTableName() {
+    private static String getTableName() {
         return TABLE_NAME + " INNER JOIN " + CategoryDataSource.TABLE_NAME + " ON " + TABLE_NAME + "." + COLUMN_CATEGORY + "=" + CategoryDataSource.TABLE_NAME + "." + _ID;
     }
 }

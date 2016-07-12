@@ -1,7 +1,6 @@
 package com.unal.personal.adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,13 +10,9 @@ import android.widget.TextView;
 
 import com.unal.personal.R;
 import com.unal.personal.dataSource.Utils;
-import com.unal.personal.gui.CategoryActivity;
-import com.unal.personal.gui.CategoryActivityFragment;
-import com.unal.personal.structures.Category;
 import com.unal.personal.structures.Topic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,8 +28,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicViewH
     @Override
     public TopicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewtopic, parent, false);
-        TopicViewHolder pvh = new TopicViewHolder(v);
-        return pvh;
+        return new TopicViewHolder(v);
     }
 
     @Override
@@ -45,7 +39,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicViewH
     @Override
     public void onBindViewHolder(TopicViewHolder holder, int i) {
         Topic p = topics.get(i);
-        holder.title.setText(p.getContent());
+        holder.title.setText((i + 1) + ". " + p.getContent());
     }
 
     @Override

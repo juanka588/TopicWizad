@@ -35,13 +35,19 @@ public class CategoryDataSource implements BaseColumns {
             for (int i = 0; i < cursor.getCount(); i++) {
                 id=cursor.getFloat(cursor.getColumnIndex(_ID));
                 name=cursor.getString(cursor.getColumnIndex(COLUMN_NAME));;
-                image=cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE));;
+                image = cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE));
+                int icon = context.getResources().getIdentifier("drawable/" + image, null,
+                        context.getPackageName());
+                if (icon == 0) {
+                    icon = R.drawable.ic_no_icon;
+                }
                 color=cursor.getString(cursor.getColumnIndex(COLUMN_COLOR));
-                categories.add(new Category(id,name, R.drawable.ic_fingerprint_white_24dp,color));
+                categories.add(new Category(id, name, icon, color));
                 cursor.moveToNext();
             }
         }
         cursor.close();
+        db.close();
         dataBase.close();
         return categories;
     }

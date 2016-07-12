@@ -1,27 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:name="com.unal.personal.gui.MainActivityFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="100"
-    android:orientation="horizontal">
-
-    <fragment
-        android:id="@+id/container"
-        android:name="com.unal.personal.gui.MainActivityFragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_weight="30"
-        tools:layout="@layout/fragment_main" />
-
-    <fragment
-        android:id="@+id/container_cat"
-        android:name="com.unal.personal.gui.CategoryActivityFragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="70"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_category" />
-</LinearLayout>
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:layout="@layout/fragment_main" />
 
