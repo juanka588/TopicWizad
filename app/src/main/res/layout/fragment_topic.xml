@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_topic"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.unal.personal.gui.TopicActivityFragment"
+    tools:showIn="@layout/activity_topic">
+
+    <TextView
+        android:id="@+id/content"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:textSize="40sp"
+        tools:text="@string/app_name" />
+
+</FrameLayout>
